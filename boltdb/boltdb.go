@@ -236,8 +236,14 @@ func NewBoltDB() *BoltDB {
 func (d *BoltDB) Stats() db.Stats {
 	res := db.Stats{}
 	d.View(func(tx *bolt.Tx) error {
-		res.ClassCount = tx.Bucket([]byte("classes")).Stats().KeyN
-		res.JarCount = tx.Bucket([]byte("jarfiles")).Stats().KeyN
+		bucket := tx.Bucket([]byte("classes"))
+		if bucket != nil {
+			res.ClassCount = bucket.Stats().KeyN
+		}
+		bucket = tx.Bucket([]byte("jarfiles"))
+		if bucket != nil {
+			res.JarCount = bucket.Stats().KeyN
+		}
 		return nil
 	})
 	return res
