@@ -17,7 +17,6 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	db := boltdb.NewBoltDB()
-	// db := jsondb.NewJSONDB()
 	if db == nil {
 		os.Exit(1)
 	}
