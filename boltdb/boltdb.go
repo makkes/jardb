@@ -225,7 +225,7 @@ func (d *BoltDB) indexFile(file string) {
 }
 
 func NewBoltDB() *BoltDB {
-	d, err := bolt.Open("/home/max/.jardb.db", 0600, &bolt.Options{Timeout: 1 * time.Second})
+	d, err := bolt.Open(path.Join(os.Getenv("HOME"), ".jardb.db"), 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error opening database: %s\n", err)
 		return nil
